@@ -20,6 +20,8 @@ REQUIRED_VARS=(
     "NINJA_TOKEN_HEAD_PER"
     "NINJA_TOKEN_HEAD_URD"
     "NINJA_TOKEN_HEAD_DBB"
+	"NINJA_TOKEN_HEAD_RAF"
+	"NINJA_TOKEN_HEAD_B2B"
     "NINJA_TOKEN_PO_ADM"
     "NINJA_TOKEN_PO_AUD"
     "NINJA_TOKEN_PO_BKRTL"
@@ -269,6 +271,8 @@ function install_ninjaone() {
   NINJA_TOKENS["Head Office-per"]="${NINJA_TOKEN_HEAD_PER}"
   NINJA_TOKENS["Head Office-urd"]="${NINJA_TOKEN_HEAD_URD}"
   NINJA_TOKENS["Head Office-dbb"]="${NINJA_TOKEN_HEAD_DBB}"
+  NINJA_TOKENS["Head Office-raf"]="${NINJA_TOKEN_HEAD_RAF}"
+  NINJA_TOKENS["Head Office-b2b"]="${NINJA_TOKEN_HEAD_B2B}"
 
   # --- Pochaina Office ---
   NINJA_TOKENS["Pochaina Office-adm"]="${NINJA_TOKEN_PO_ADM}"
