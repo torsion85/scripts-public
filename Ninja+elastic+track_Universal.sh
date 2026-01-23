@@ -257,6 +257,43 @@ function select_location() {
   done
 }
 
+rename_byod_pc() {
+    echo
+    echo "Обрано локацію BYOD"
+    echo "Рекомендується перейменувати ПК відповідно до стандарту."
+    echo "Приклад: BYOD-Cherniienko"
+    echo
+
+    read -rp "Перейменувати ПК зараз? (y/N): " RENAME_CHOICE
+    RENAME_CHOICE="${RENAME_CHOICE,,}"  # to lowercase
+
+    if [[ "$RENAME_CHOICE" != "y" ]]; then
+        echo "Перейменування пропущено"
+        return
+    fi
+
+    CURRENT_HOSTNAME="$(hostnamectl --static)"
+    echo "Поточне імʼя ПК: $CURRENT_HOSTNAME"
+
+    read -rp "Введіть нове імʼя ПК: " NEW_HOSTNAME
+
+    if [[ -z "$NEW_HOSTNAME" ]]; then
+        echo "❌ Імʼя не може бути порожнім, пропускаємо"
+        return
+    fi
+
+    if ! [[ "$NEW_HOSTNAME" =~ ^[a-zA-Z0-9-]+$ ]]; then
+        echo "❌ Імʼя може містити лише літери, цифри та '-'"
+        return
+    fi
+
+    echo "🔄 Змінюю hostname на: $NEW_HOSTNAME"
+    sudo hostnamectl set-hostname "$NEW_HOSTNAME"
+
+    echo "✅ Hostname змінено успішно"
+    echo "ℹ️  Рекомендується перелогін або reboot"
+}
+
 
 function install_ninjaone() {
   log "NinjaOne: старт перевірки"
@@ -324,6 +361,7 @@ function install_ninjaone() {
   # BYOD FLOW (NO ROLE / NO HOSTNAME PARSING)
   # ==================================================
   if [[ "$LOCATION" == "BYOD" ]]; then
+        rename_byod_pc
     if [[ -z "${NINJA_TOKENS["BYOD"]:-}" ]]; then
       log "❌ NINJA_TOKEN_BYOD не задано"
       exit 1
