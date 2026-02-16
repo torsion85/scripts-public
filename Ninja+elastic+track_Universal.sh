@@ -44,6 +44,7 @@ REQUIRED_VARS=(
     "NINJA_TOKEN_VAS_RISK"
     "NINJA_TOKEN_BYOD"
 	"NINJA_TOKEN_HEAD_BIO"
+	"NINJA_TOKEN_HEAD_CAS"
 )
 
 MISSING_VARS=()
@@ -314,6 +315,7 @@ function install_ninjaone() {
   NINJA_TOKENS["Head Office-raf"]="${NINJA_TOKEN_HEAD_RAF}"
   NINJA_TOKENS["Head Office-b2b"]="${NINJA_TOKEN_HEAD_B2B}"
   NINJA_TOKENS["Head Office-bio"]="${NINJA_TOKEN_HEAD_BIO}"
+  NINJA_TOKENS["Head Office-cas"]="${NINJA_TOKEN_HEAD_CAS}"
 
   # --- Pochaina Office ---
   NINJA_TOKENS["Pochaina Office-adm"]="${NINJA_TOKEN_PO_ADM}"
