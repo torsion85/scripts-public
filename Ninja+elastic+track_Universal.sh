@@ -45,6 +45,7 @@ REQUIRED_VARS=(
     "NINJA_TOKEN_BYOD"
 	"NINJA_TOKEN_HEAD_BIO"
 	"NINJA_TOKEN_HEAD_CAS"
+	"NINJA_TOKEN_TEST"
 )
 
 MISSING_VARS=()
@@ -237,6 +238,7 @@ function select_location() {
     "Pochaina Office"
     "Vasylkivska Office"
     "BYOD"
+	"TEST"
   )
 
   local i=1
@@ -341,6 +343,9 @@ function install_ninjaone() {
   NINJA_TOKENS["Vasylkivska Office-vof"]="${NINJA_TOKEN_VAS_VOF}"
   NINJA_TOKENS["Vasylkivska Office-risk"]="${NINJA_TOKEN_VAS_RISK}"
 
+  # ---TEST---
+  NINJA_TOKENS["TEST"]="${NINJA_TOKEN_TEST}"
+
   # --- BYOD ---
   NINJA_TOKENS["BYOD"]="${NINJA_TOKEN_BYOD}"
 
@@ -388,6 +393,31 @@ function install_ninjaone() {
     log "✅ NinjaOne агент встановлено (BYOD)"
     return 0
   fi
+
+  if [[ "$LOCATION" == "TEST" ]]; then
+
+    if [[ -z "${NINJA_TOKENS["TEST"]:-}" ]]; then
+        log "❌ NINJA_TOKEN_TEST не задано"
+        exit 1
+    fi
+
+    NINJAONE_TOKEN="${NINJA_TOKENS["TEST"]}"
+    log "TEST режим — використовується окремий токен"
+
+    cd /tmp
+    curl -L \
+      "https://eu.ninjarmm.com/ws/api/v2/generic-installer/NinjaOneAgent-x86_64.deb" \
+      -o "NinjaOneAgent-x86_64.deb"
+
+    sudo TOKENID="$NINJAONE_TOKEN" dpkg -i NinjaOneAgent-x86_64.deb || {
+        log "❌ Помилка встановлення NinjaOne (TEST)"
+        exit 1
+    }
+
+    rm -f NinjaOneAgent-x86_64.deb
+    log "✅ NinjaOne агент встановлено (TEST)"
+    return 0
+fi
 
   # === ОЧИЩЕННЯ HOSTNAME ТА ВИЗНАЧЕННЯ РОЛІ ===
   RAW_HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
