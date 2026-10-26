@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+export OS_AUTH_URL=https://osc.gigacloud.ua:5000/v3/
+echo "PROJECT_ID"
+read PROJECT_ID
+export OS_PROJECT_ID="$PROJECT_ID"
+export OS_USER_DOMAIN_NAME="Default"
+if [ -z "$OS_USER_DOMAIN_NAME" ]; then unset OS_USER_DOMAIN_NAME; fi
+export OS_PROJECT_DOMAIN_ID="default"
+if [ -z "$OS_PROJECT_DOMAIN_ID" ]; then unset OS_PROJECT_DOMAIN_ID; fi
+unset OS_TENANT_ID
+unset OS_TENANT_NAME
+export OS_USERNAME="support"
+echo "OS_PASSWORD"
+read OS_PASSWORD
+export OS_PASSWORD="$OS_PASSWORD"
+export OS_REGION_NAME="RegionOne"
+if [ -z "$OS_REGION_NAME" ]; then unset OS_REGION_NAME; fi
+export OS_INTERFACE=public
+export OS_IDENTITY_API_VERSION=3
